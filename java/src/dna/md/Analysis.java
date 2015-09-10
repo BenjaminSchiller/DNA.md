@@ -5,6 +5,7 @@ import java.io.File;
 import dna.metrics.Metric;
 import dna.metrics.assortativity.AssortativityR;
 import dna.metrics.degree.DegreeDistributionR;
+import dna.metrics.motifs.UndirectedMotifsPerNodesR;
 import dna.metrics.motifs.UndirectedMotifsU;
 import dna.metrics.paths.IntWeightedAllPairsShortestPathsR;
 import dna.metrics.paths.UnweightedAllPairsShortestPathsR;
@@ -17,8 +18,10 @@ import dna.series.data.SeriesData;
 
 public class Analysis extends MD {
 
+	public static final String separator2 = "_";
+
 	public static enum MetricType {
-		UM4, APSP_W, APSP, RMSD, RMSF, DD, ASS
+		UM4, UM4_PNS, APSP_W, APSP, RMSD, RMSF, DD, ASS
 	}
 
 	public MetricType[] mts;
@@ -112,6 +115,13 @@ public class Analysis extends MD {
 			return new RootMeanSquareFluctuationR(Integer.parseInt(p));
 		case UM4:
 			return new UndirectedMotifsU();
+		case UM4_PNS:
+			String[] temp = p.split(separator2);
+			int[] indexes = new int[temp.length];
+			for (int i = 0; i < temp.length; i++) {
+				indexes[i] = Integer.parseInt(temp[i]);
+			}
+			return new UndirectedMotifsPerNodesR(indexes);
 		default:
 			throw new IllegalArgumentException("unknown metric type: " + mt);
 		}
