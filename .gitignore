@@ -1,0 +1,8 @@
+analysis/*.jar
+analysis/jobs.*
+analysis/data/
+analysis/datasets/
+analysis/plots/
+
+java/bin/
+java/config/
